@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=0.5in, top=0.1cm]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+\font\titleFont=cmr12 at 16pt
+\font\authorFont=cmr12 at 12pt
+\title{\titleFont Exploring the Efficiency \& Cost-Effectiveness of Distributed Computing for Test Execution}
+\author{\authorFont Group members: Mrudini Patel, Deshawn Knight}
+\date{}
+
+\maketitle
+\section*{Research Topic}
+Distributed computing. As modern software systems become increasingly complex, finding ways to accelerate software testing – without sacrificing efficiency – is crucial in rapidly delivering high-quality software products to users. 
+
+\section*{Research Question}
+To what extent can test execution leverage distributed computing to improve efficiency and speed, considering factors such as memory and CPU usage, execution time, the trade-offs between vertical and horizontal scaling, and cost-effectiveness at scale? 
+
+\section*{Goal}
+\begin{itemize}
+\item To investigate the current state of distributed testing
+\item Evaluate whether distributed computing can be leveraged to enhance testing speed and efficiency for modern day software systems with, both, smaller and larger code-bases.
+\end{itemize}
+
+\section*{Approach}
+\begin{enumerate}
+\item Conduct literature reviews on current state of distributed testing. 
+\item Seek large and small scale open-source software programs with unit test suites.
+\item Configure a controlled distributed testing environment for test execution.
+\item Execute automation unit tests for the programs under, both, distributed and single machines. Record data relevant to speed, efficiency, and cost implications (e.g., resource usage). 
+\item Analyze results to determine the overall effectiveness of distributed testing in improving speed and efficiency, while assessing the cost-effectiveness of managing multiple machines. 
+\end{enumerate}
+
+\section*{Hypothesis}
+\begin{itemize}
+\item Large code-base test suites run under distributed testing will significantly be faster and more efficient for large code-bases, justifying the management of multiple machines worthwhile.  
+\item Conversely, this approach will prove inefficient and unnecessary for smaller code-bases. The overhead of managing a distributed environment will outweigh the performance advantages.
+\end{itemize}
+\end{document}
