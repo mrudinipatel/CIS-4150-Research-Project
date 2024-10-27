@@ -1,0 +1,150 @@
+\section{Background}
+\label{Background}
+
+Replace all this with a relevant comprehensive literaure review in your specific area of interest in Software Testing.  The Background section provides context and detailed information needed to understand the research problem. It typically includes a review of existing literature, key concepts, theories, and previous studies relevant to the topic. The goal is to frame the research by outlining what is already known, identifying gaps in the knowledge, and explaining why the current study is necessary. The background helps the reader understand how the research fits into the broader field and what it aims to contribute. 
+
+The rapid evolution of Generative AI has profoundly transformed technological capabilities, significantly influencing societal interactions, business processes, and educational methodologies. This section is divided into three main parts. The first part delves into the key technologies that have driven this transformation, highlighting their impact and implications. The second part presents an overview of current applications of Generative AI in the context of education, exploring how these innovations are being integrated into teaching and learning environments. The last section presents an overview of various readability metrics commonly used in the assessment of text.
+
+\subsection{Foundations of Generative AI}
+Before 2017, Natural Language Processing (NLP) relied heavily on architectures like Constitutional Neural Networks, Recurrent Neural Networks (RNNs), Gated Recurrent Units (GRUs), and Long Short-Term Memory networks (LSTMs)~\cite{sherstinsky_2020_fundamentals}. These architectures were adept at processing sequences and were widely used for various NLP tasks. However, they often struggled with long-range dependencies and were computationally intensive due to their sequential nature, limiting their scalability and performance on larger datasets~\cite{sherstinsky_2020_fundamentals}.
+
+NLP took a major leap forward in 2017 with the introduction of the \textit{Transformer} model by Vaswani et al.~\cite{vaswani2017_Attention}. It marked a paradigm shift in sequence modeling, emphasizing the importance of self-attention mechanisms~\cite{vaswani2017_Attention}. Essential for developing models that require a complex understanding of sequence data, such as those used in real-time language translation and interactive conversational agents, the Transformer architecture has become a core component of many state-of-the-art AI systems, influencing advancements across numerous fields including healthcare, finance, and autonomous vehicles.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{figures/transformer_architecture}
+	\caption[Transformer Architecture]{The Transformer -- model architecture~\cite{vaswani2017_Attention}}
+	\label{fig:Transformer_Architecture}
+\end{figure}
+
+Following the Transformer's success, Google AI's BERT (Bidirectional Encoder Representations from Transformers) emerged as a significant advancement, leveraging the Transformer's architecture to enhance language understanding~\cite{devlin2018_BERT}. BERT revolutionized natural language understanding by employing a transformer-based mechanism that processes words in the context of the entire sentence, rather than in isolation~\cite{devlin2018_BERT}. This breakthrough has led to substantial improvements in a range of language processing tasks, including translation, text summarization, and sentiment analysis. BERT's architecture leverages a stack of transformer blocks that feature two key components: multi-head self-attention mechanisms and fully connected feed-forward networks. This architecture enables the model to capture complex word relationships and contextual nuances across different parts of the text, facilitating more effective learning and prediction capabilities compared to previous models. BERT is also trained on a large corpus of text in a self-supervised manner using two tasks: masked language modeling and next sentence prediction, which help improve its language understanding. Figure~\ref{fig:BERT_architecture} presents the BERT architectural model, illustrating its deep neural network structure and attention mechanisms that contribute to its powerful performance.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\linewidth]{figures/BERT_Architecture}
+	\caption[BERT architectural model]{BERT architectural model~\cite{devlin2018_BERT}}
+	\label{fig:BERT_architecture}
+\end{figure}
+
+Building on BERT’s architecture, RoBERTa (Robustly Optimized BERT Approach) by Facebook AI modified key training methodologies to optimize performance~\cite{liu2019_RoBERTa}. Specifically, RoBERTa is trained with dynamic masking, full-sentences without NSPloss, large mini-batches, and a larger byte-level BPE~\cite{liu2019_RoBERTa}. Additionally, RoBERTa includes two other important components that were under-emphasized in the BERT architecture, namely: (1)~the data used for pretraining, and (2)~the number of training passes through the data. The RoBERTa model is trained on more data, with larger batches and longer sequences. As a result, RoBERTa offers a significant improvement in its language understanding capabilities, pushing the boundaries of what AI can comprehend and respond to, thereby setting new standards for model robustness and accuracy in language tasks~\cite{liu2019_RoBERTa}.
+
+Since 2019, Hugging Face has emerged as a pivotal player in democratizing AI through the development and maintenance of the Transformers library, which provides a vast collection of pre-trained models for a variety of NLP tasks~\cite{wolf2020transformers}. This open-source library has enabled researchers and practitioners to easily implement cutting-edge models, fostering innovation and accelerating the adoption of AI technologies across industries. Currently, there are over 200 different transformer models available from Hugging Face: \url{https://huggingface.co/docs/transformers/index}.
+
+The Generative Pre-trained Transformer (GPT) series, developed by OpenAI, includes notable releases such as GPT-2 in 2019, GPT-3.5 in 2022, and GPT-4 in 2023. Each iteration has progressively expanded the scale and capabilities of language models~\cite{radford2019_language,brown2020_language}. With each version, there has been a significant leap in sophistication; for instance, GPT-4 is capable of producing text that closely mimics human writing across a wide range of genres and styles. These advancements underscore the creative potential of AI in generating coherent and contextually relevant text. However, they also bring to light critical ethical considerations, including concerns over misinformation, copyright issues, and the autonomy of AI-driven content creation. 
+
+Figure~\ref{fig:GPT_Architecture} presents the architecture of the Generative Pre-trained Transformer. The GPT architecture is built upon the foundation of the Transformer model, which utilizes layers of self-attention mechanisms to process text~\cite{wolf2020transformers}. At the core of the GPT architecture, as illustrated in the figure, is a series of Transformer blocks stacked on top of each other. Each block contains two main sub-layers: a \textit{multi-head self-attention} mechanism and a \textit{position-wise fully connected feed-forward network}.
+
+Input embeddings, which convert tokens (words or pieces of words) into vectors of numbers, are first modified by positional encodings to retain the sequence order of the input text. These embeddings then pass through the Transformer blocks, where the self-attention mechanism allows the model to weigh the importance of different words relative to each other, regardless of their position in the text. This is followed by normalization and feed-forward layers that help in refining the representation with nonlinear transformations.
+
+Each attention head in the multi-head attention layer computes an \textit{attention score}, which represents how much focus to place on other parts of the input sentence as each word is processed. The attention outputs are then combined and linearly transformed into the expected dimensions. Dropout layers are incorporated to prevent overfitting by randomly omitting subsets of features during training. The entire process within a Transformer block is designed to be differentiable so that it can be efficiently trained using gradient descent-based optimization.
+
+This architecture enables GPT to generate text by predicting the next word in a sentence based on the words that came before it, learning to generate coherent and contextually relevant language over time. This capability makes GPT highly effective for a range of applications from automated content generation to sophisticated conversation simulations.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\linewidth]{figures/Full_GPT_architecture}
+	\caption[Transformer Architecture]{The GPT Architecture~\cite{brown2020_language}}
+	\label{fig:GPT_Architecture}
+\end{figure}
+
+In 2020 Facebook AI Research published a paper on Retrieval-Augmented Generation (RAG) which introduces an approach that combines the generative capabilities of models like GPT with the retrieval of factual information during the generation process~\cite{lewis2020retrieval}. This methodology enhances the model's ability to produce relevant and accurate responses by dynamically retrieving context from a vast corpus of data, representing a significant advancement in efforts to bridge the gap between human-like understanding and AI output.  Some examples of RAG models include:
+\begin{enumerate}
+	\item \textit{Call centre agent support}. Call centre agents require extensive knowledge of potentially hundreds of products and services, as well as commonly occurring product issues and their resolution. RAG solutions could assist agents in quickly finding answers to client requests.
+	\item \textit{Customer chatbots}. RAG is strong enabler for creating customer-facing chatbots to answer frequently asked questions. Combining the natural language abilities of LLMs and the enterprise-specific responses of RAG can deliver a compelling, conversational customer experience.  
+	\item \textit{Support / helpdesk}. Similar to call centre agents, IT operations and support personnel require deep knowledge of the configuration of complex systems deployments along with knowledge of common and previously seen issues and their resolution. RAG solutions could assist support personnel with quickly finding relevant answers to reported problems and observed issues.
+\end{enumerate}
+
+In the context of education, RAG offers transformative potential for educational environments by enhancing personalization, efficiency, and interaction in learning processes. By combining the generative capabilities of models like GPT with dynamic information retrieval, RAG can create tailored educational content, support research and writing, and enhance interactive tutoring systems~\cite{lewis2020retrieval}.  RAG's ability to pull relevant data from extensive knowledge bases allows it to generate accurate, context-specific content, making it ideal for developing personalized learning materials and dynamic assessment tools. Additionally, its application in question-answering systems can provide students with precise and informative responses, thereby fostering a deeper understanding of the subject matter~\cite{lewis2020retrieval}.
+
+However, the integration of RAG into educational tools must be approached with caution, addressing potential challenges such as ensuring the accuracy and reliability of content, mitigating data biases, and upholding stringent privacy standards. Continuous collaboration with educators, careful dataset curation, and rigorous testing are essential to leverage RAG's capabilities effectively while maintaining educational integrity and compliance~\cite{holmes2019_artificial}.
+
+
+\subsection{ChatGPT in Education}
+\label{subsec:chatgpt_education}
+
+ChatGPT, has been progressively integrated into educational contexts, showcasing potential across various teaching and learning activities. This section explores its primary applications and the emerging studies surrounding its efficacy and challenges in educational settings.
+
+\subsubsection{Automated Content and Assessment Tools}
+ChatGPT excels in generating and customizing educational content such as quizzes, reading materials, and assignments. It also offers potential in preliminary assessments by providing feedback on written assignments, which can be particularly beneficial in managing large classes~\cite{automated_content_generation}.
+
+\subsubsection{Tutoring and Support}
+As an interactive tutor, ChatGPT responds to student inquiries, assists with homework, and explains complex concepts, offering personalized support outside traditional classroom settings. This 24/7 availability can significantly enhance student learning, especially in subjects requiring frequent practice or clarification, such as languages and sciences~\cite{interactive_tutoring}.
+
+\subsubsection{Enhancing Engagement and Language Learning}
+In discussions, ChatGPT can stimulate engagement by posing challenging questions or introducing diverse viewpoints. For language learners, it serves as an invaluable practice tool, facilitating conversation in various languages, which helps improve linguistic fluency and cultural awareness~\cite{language_learning}.
+
+\subsubsection{Challenges and Ethical Considerations}
+Despite its benefits, the deployment of ChatGPT raises concerns regarding reliability, potential biases, and academic integrity. Misinformation, inherent biases from training data, and the potential for students to misuse essay-writing capabilities require careful consideration and regulation. Ensuring that these tools are used to complement traditional educational methods rather than replace them is crucial for maintaining the quality and integrity of education~\cite{chatgpt_challenges}.
+
+The integration of these advanced Generative AI technologies in educational settings offers unprecedented opportunities for enhancing teaching and learning. Educators are leveraging these tools to develop more engaging and interactive learning environments, tailor educational content to individual needs, and foster critical thinking skills~\cite{holmes2019_artificial}. However, this integration also poses challenges, including ensuring the ethical use of AI in classrooms, protecting student data privacy, and maintaining academic integrity.
+
+\subsection{Readability Metrics}
+The following set of established readability metrics are important in the assessment of text difficulty, engagement, and appropriateness for educational content. 
+
+\subsubsection{Readability Metrics Used in Educational Assessments}
+Understanding the readability of educational content is crucial for tailoring materials to appropriate comprehension levels. This study employs several established readability metrics to evaluate the text complexity and accessibility of student-generated critiques. Below is a detailed explanation of each metric and its significance:
+
+\begin{enumerate}	
+	\item \textit{Flesch-Kincaid Grade Level}: Estimates the U.S. school grade level needed to understand the text. Lower scores indicate easier readability. A score of 12.0, for instance, suggests that the text is suitable for twelfth graders or equivalent~\cite{Farr_1951}. The Flesch-Kincaid grade level is calculated with the following formula: 
+	
+	{\footnotesize
+		\begin{equation}
+			0.39 \left(\frac{\text{total words}}{\text{total sentences}}\right) + 11.8 \left(\frac{\text{total syllables}}{\text{total words}}\right) - 15.59
+		\end{equation}
+	}
+	
+	\item \textit{Flesch Reading Ease}: Evaluates text simplicity based on the average sentence length and the average number of syllables per word. Scores range from 0 to 100, with higher scores indicating easier readability. For example, texts scoring between 60 and 70 are considered suitable for standard reading, while a score in the range of 10.0 - 30.0 is ranked at the `College graduate' level, typically very difficult to read and best understood by university graduates~\cite{Flesch_1948}. The Flesch Reading Ease score is calculated as follows: 
+
+	{\footnotesize
+		\begin{equation}
+			\label{Flesch Reading Ease}
+			206.835 - 1.015\left(\frac{\text{total words}}{\text{total sentences}}\right) - 84.6 \left(\frac{\text{total syllables}}{\text{total words}}\right)
+		\end{equation}
+	}
+
+	\item \textit{Dale-Chall Readability Score}: Uses a list of familiar words to assess the grade level. Higher scores indicate more challenging text. A score of 9.0-10.0 suggests that the text is best understood by college-level readers~\cite{Dale_1948_DaleChall}. The Dale-Chall readability score is calculated with the following formula: 
+	
+	{\footnotesize
+	\begin{equation}
+		0.1579 \left(\frac{\text{difficult words}}{\text{words}} \times 100\right) + 0.0496 \left(\frac{\text{words}}{\text{sentences}}\right)
+	\end{equation}
+	}
+	\item \textit{Automated Readability Index (ARI)}: Uses characters per word and words per sentence to estimate the grade level required for comprehension. A score of 13.0 indicates that the text is suitable for college freshmen~\cite{Senter_1971_ARI}. The ARI score is calculated: 
+	
+	\begin{equation}
+		4.71 \left(\frac{\text{characters}}{\text{words}}\right) + 0.5 \left(\frac{\text{words}}{\text{sentences}}\right)
+	\end{equation}
+	
+	\item \textit{Coleman Liau Index}: Estimates the U.S. school grade level necessary to understand the text, based on characters per word and words per sentence. A score of 11.0-12.0 indicates high school senior level complexity~\cite{Coleman_1975}. The Coleman–Liau index is calculated with the following formula:
+	
+	\begin{equation}
+		CLI = 0.0588 \cdot L - 0.296 \cdot S - 15.8
+	\end{equation}
+	where $L$ is the average number of letters per 100 words and $S$ is the average number of sentences per 100 words.
+	 
+	\item \textit{Gunning Fog Index}: Estimates the years of formal education needed to understand the text. A score of 16.0 suggests college graduate level difficulty~\cite{Gunning_1952}. The Index is calculated as:
+	
+	\begin{equation}
+		0.4 \left[\left(\frac{\text{words}}{\text{sentences}}\right) + 100 \left(\frac{\text{complex words}}{\text{words}}\right)\right]
+	\end{equation}
+	
+	\item \textit{Linsear Write Formula}: Calculates the U.S. grade level based on sentence length and the number of easy or difficult words. A score of 8.0 means the text is suitable for eighth graders~\cite{Klare_1974}.  (See~\cite{Klare_1974} for the algorithm to compute the Linsear Write value.)
+	
+	\item \textit{SMOG Index (Simple Measure of Gobbledygook)}: Estimates the years of education needed to understand a text based on the number of polysyllabic words. A score of 17.0 implies graduate-level readability~\cite{McLaughlin_1969_SMOG}. SMOG is calculated using this formula:
+	{\footnotesize
+		\begin{equation}
+			1.043 \sqrt{\text{num of polysyllables} \times \frac{30}{\text{num of sentences}}} + 3.1291
+		\end{equation}
+	}
+	
+	\item \textit{SPACHE Score}: Specifically designed for early readers, assessing sentence length and word familiarity. A score suitable for first to third graders would typically be below 4.0~\cite{Spache_1953}.  This instrument is not suitable for upper level undergraduate or graduate students.
+\end{enumerate}
+
+These readability metrics collectively provide insights into the accessibility of written content, ensuring that educational materials are appropriately challenging yet understandable for the intended audience.
+
+\subsubsection{Additional Readability and Quality Metrics}
+Beyond traditional readability metrics like the Flesch Reading Ease and Linsear Write Scores, other computational assessments such as the Bilingual Evaluation Understudy (BLEU), Recall-Oriented Understudy for Gisting Evaluation (ROUGE), and Metric for Evaluation of Translation with Explicit Ordering (METEOR) provide a broader evaluation of text quality, especially in contexts involving generative AI. BLEU measures the precision of generated text against reference texts by comparing the overlap of phrases and their order, making it ideal for assessing translation accuracy and content generation tasks in educational tools. This metric is widely used in machine translation to quantify how closely machine-generated text resembles human-like translations. Similarly, ROUGE is crucial for evaluating the coverage and recall of summaries produced by AI, ensuring that essential content is not omitted. It compares the extent to which the generated summaries capture the content present in a set of reference summaries, which is particularly useful in the evaluation of text summarization systems. Meanwhile, METEOR enhances evaluation by incorporating synonymy and stemming, alongside exact word matching, providing a balanced measure of fluency and intent preservation in generated text. Unlike BLEU, METEOR is designed to align more closely with human judgment by accounting for the flexibility in language use. Collectively, these metrics help in assessing the suitability of AI-generated educational content, aligning it with pedagogical goals and learner needs. Their application ensures that educational tools powered by AI not only generate content that is factually accurate but also presented in a manner that is understandable and engaging for students.
+
+In summary, both BLEU and METEOR are traditionally utilized in machine translation to evaluate the alignment of translated text against one or more reference texts. These metrics quantify the extent of word and phrase overlap in the machine-generated text relative to the reference texts. Meanwhile, ROUGE assesses the quality of summaries by measuring the overlap between a generated summary and reference summaries, focusing particularly on the recall of essential content. However, in this study, there are no \textit{reference texts} available that would typically be required for these metrics to function effectively. Consequently, traditional readability metrics, which do not rely on reference texts, are deemed most appropriate for evaluating the critiques created by the students.
+
+In the next section, we present the methodology supporting our investigation into the potential of LLMs to bolster students' critical thinking and writing capabilities.

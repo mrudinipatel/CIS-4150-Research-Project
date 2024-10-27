@@ -1,0 +1,150 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{brown2020_language}
+Brown, T.B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P.,
+  Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et~al.: {Language Models
+  are Few-Shot Learners}. arXiv preprint arXiv:2005.14165  (2020)
+
+\bibitem{chall_1995_readability}
+Chall, J.S., Dale, E.: Readability Revisited: The New Dale-Chall Readability
+  Formula. Brookline Books, Cambridge, MA (1995)
+
+\bibitem{Coleman_1975}
+Coleman, M., Liau, T.L.: A computer readability formula designed for machine
+  scoring. Journal of Applied Psychology  \textbf{60},  283–284 (1975)
+
+\bibitem{Dale_1948_DaleChall}
+Dale, E., Chall, J.S.: A Formula for Predicting Readability: Instructions.
+  Educational Research Bulletin (1948)
+
+\bibitem{devlin2018_BERT}
+Devlin, J., Chang, M.W., Lee, K., Toutanova, K.: {BERT: Pre-training of Deep
+  Bidirectional Transformers for Language Understanding}. arXiv preprint
+  arXiv:1810.04805  (2018)
+
+\bibitem{Farr_1951}
+Farr~JN, Jenkins~JJ, P.D.: Simplification of flesch reading ease formula.
+  Journal of Applied Psychology  \textbf{35}(5),  333–337 (1951).
+  \doi{doi:10.1037/h0062427.}
+
+\bibitem{Flesch_1948}
+Flesch, R.: A new readability yardstick. J Appl Psychol  \textbf{32}(3),
+  221--33 (1948). \doi{10.1037/h0057532}, flesch, r Journal Article United
+  States 1948/06/01 J Appl Psychol. 1948 Jun;32(3):221-33. doi:
+  10.1037/h0057532.
+
+\bibitem{graesser_2011_cohmetrix}
+Graesser, A.C., McNamara, D.S., Kulikowich, J.M.: Coh-metrix: Providing
+  multilevel analyses of text characteristics. Educational Researcher
+  \textbf{40}(5),  223--234 (2011)
+
+\bibitem{Gunning_1952}
+Gunning, R.: The Technique of Clear Writing, p. 36–37. McGraw-Hill (1952)
+
+\bibitem{holmes2019_artificial}
+Holmes, W., Bialik, M., Fadel, C.: {Artificial Intelligence In Education:
+  Promises and Implications for Teaching and Learning}. Center for Curriculum
+  Redesign (2019)
+
+\bibitem{chatgpt_challenges}
+Jones, S.A., Buntins, M.: Ethical implications of ai in education: A review.
+  Journal of Research on Technology in Education  \textbf{54}(3),  409--424
+  (2022)
+
+\bibitem{Klare_1974}
+Klare, G.R.: Assessing readability. Reading Research Quarterly  \textbf{10}(1),
+   62--102 (1974). \doi{10.2307/747086},
+  \url{http://www.jstor.org/stable/747086}, linsear readability
+
+\bibitem{interactive_tutoring}
+Kumar, V.: The role of ai-powered feedback in education: A scalable approach to
+  enhancing human learning. Educational Technology Research and Development
+  \textbf{68},  2939--2960 (2020)
+
+\bibitem{Levene_1960}
+Levene, H.: Robust tests for equality of variances. In: Olkin, I. (ed.)
+  Contributions to Probability and Statistics: Essays in Honor of Harold
+  Hotelling, pp. 278--292. Stanford University Press (1960)
+
+\bibitem{lewis2020retrieval}
+Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N.,
+  Küttler, H., Lewis, M., Yih, W.t., Rocktäschel, T., et~al.:
+  Retrieval-augmented generation for knowledge-intensive nlp tasks. In:
+  Advances in Neural Information Processing Systems. vol.~33, pp. 9459--9474
+  (2020)
+
+\bibitem{liu2019_RoBERTa}
+Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M.,
+  Zettlemoyer, L., Stoyanov, V.: {RoBERTa: A Robustly Optimized BERT
+  Pretraining Approach}. arXiv preprint arXiv:1907.11692  (2019)
+
+\bibitem{McLaughlin_1969_SMOG}
+McLaughlin, G.H.: Smog grading—a new readability formula. Journal of Reading
+  \textbf{12}(8),  639--646 (1969)
+
+\bibitem{osullivan_2020_collaborating}
+O'Sullivan, I., Perryman, L.A.: Collaborating with ai: Exploring networked
+  learning perspectives. Journal of Interactive Media in Education
+  \textbf{2020}(1) (2020)
+
+\bibitem{Rocha_2022_SmartCities}
+Pacheco~Rocha, N., Dias, A., Santinha, G., Rodrigues, M., Rodrigues, C.,
+  Queirós, A., Bastardo, R., Pavão, J.: Systematic literature review of
+  context-awareness applications supported by smart cities’ infrastructures.
+  SN Applied Sciences  \textbf{4}(4), ~90 (2022).
+  \doi{10.1007/s42452-022-04979-0},
+  \url{https://doi.org/10.1007/s42452-022-04979-0}
+
+\bibitem{radford2019_language}
+Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., Sutskever, I.: {Language
+  Models are Unsupervised Multitask Learners} (2019)
+
+\bibitem{automated_content_generation}
+Schmid, U., Goertz, L., Radomski, S.: The impact of artificial intelligence on
+  learning, teaching, and education. Publications Office of the European Union
+  (2019), \url{https://data.europa.eu/doi/10.2760/382730}
+
+\bibitem{Senter_1971_ARI}
+Senter, R., Smith, E.: Automated readability index. AMRL-TR  \textbf{1},  1--14
+  (1967)
+
+\bibitem{ShapiroWilk_1965}
+Shapiro, S.S., Wilk, M.B.: An analysis of variance test for normality (complete
+  samples). Biometrika  \textbf{52}(3/4),  591--611 (1965)
+
+\bibitem{sherstinsky_2020_fundamentals}
+Sherstinsky, A.: Fundamentals of recurrent neural network (rnn) and long
+  short-term memory (lstm) network. Physica D: Nonlinear Phenomena
+  \textbf{404},  132306 (2020)
+
+\bibitem{language_learning}
+Smith, B., Johnson, M.: Harnessing artificial intelligence to enhance language
+  learning: A review. Language Learning \& Technology  \textbf{25}(1),  34--52
+  (2021), \url{https://www.lltjournal.org/item/3098}
+
+\bibitem{Spache_1953}
+Spache, G.: A new readability formula for primary-grade reading materials. The
+  Elementary School Journal  \textbf{53}(7),  410--413 (1953),
+  \url{http://www.jstor.org/stable/998915}
+
+\bibitem{vaswani2017_Attention}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N.,
+  Kaiser, {\L}., Polosukhin, I.: Attention is all you need. In: Advances in
+  neural information processing systems. pp. 5998--6008 (2017)
+
+\bibitem{Weiser_1999}
+Weiser, M.: The computer for the 21st century. SIGMOBILE Mob. Comput. Commun.
+  Rev.  \textbf{3}(3),  3–11 (jul 1999). \doi{10.1145/329124.329126},
+  \url{https://doi.org/10.1145/329124.329126}
+
+\bibitem{wolf2020transformers}
+Wolf, T., Debut, L., Sanh, V., Chaumond, J., Delangue, C., Moi, A., Cistac, P.,
+  Rault, T., Louf, R., Funtowicz, M., et~al.: Transformers: State-of-the-art
+  natural language processing. In: Proceedings of the 2020 Conference on
+  Empirical Methods in Natural Language Processing: System Demonstrations. pp.
+  38--45 (2020)
+
+\end{thebibliography}
