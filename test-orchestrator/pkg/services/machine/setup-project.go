@@ -1,4 +1,4 @@
-package kubernetes
+package machine
 
 import (
 	"log"
@@ -6,21 +6,22 @@ import (
 	"path"
 	"strings"
 
-	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/project"
+	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
+	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/testset"
 )
 
-// TODO: This should happen in the Kubernetes Job to a Persistant Volume
-func CloneTestProject(project *project.Project, volume *PersistantVolume) ([]string, error) {
+// SetupProject implements domain.TestExecutor.
+func (k *MachineExecutor) SetupProject(project domain.Project, workspace domain.Workspace) (*testset.TestSet, error) {
 	log.Println("Setting up project...")
-	cmd := exec.Command("git", "clone", project.GetCloneUrl(), volume.GetPath())
+	cmd := exec.Command("git", "clone", project.GetCloneUrl(), workspace.GetPath())
 
 	if err := cmd.Run(); err != nil {
 		return nil, err
 	}
 
-	setup, _ := project.GetSetupCommand()
+	setup := project.GetSetupCommand()
 
-	setup.Dir = volume.GetPath()
+	setup.Dir = workspace.GetPath()
 
 	if err := setup.Run(); err != nil {
 		return nil, err
@@ -30,7 +31,7 @@ func CloneTestProject(project *project.Project, volume *PersistantVolume) ([]str
 	log.Println("Discovering test files...")
 
 	getTests := exec.Command("find", ".", "-type", "f", "-name", "*Test*.java")
-	getTests.Dir = volume.GetPath()
+	getTests.Dir = workspace.GetPath()
 
 	tests := []string{}
 
@@ -44,5 +45,5 @@ func CloneTestProject(project *project.Project, volume *PersistantVolume) ([]str
 		}
 	}
 
-	return tests, nil
+	return testset.Create(tests), nil
 }

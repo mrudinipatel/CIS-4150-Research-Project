@@ -1,12 +1,14 @@
-package kubernetes
+package machine
 
 import (
 	"log"
 	"math/rand"
 	"os"
+
+	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
 )
 
-type PersistantVolume struct {
+type Directory struct {
 	path string
 }
 
@@ -20,15 +22,16 @@ func randSeq(n int) string {
 	return string(b)
 }
 
-func CreatePersistantVolume() (*PersistantVolume, error) {
+func (pv *Directory) GetPath() string {
+	return pv.path
+}
+
+// CreateWorkspace implements domain.TestExecutor.
+func (k *MachineExecutor) CreateWorkspace() (domain.Workspace, error) {
 	log.Println("Creating Persistant Volume...")
 	path := "/tmp/" + randSeq(10)
 	os.Mkdir(path, 0750)
-	return &PersistantVolume{
+	return &Directory{
 		path: path,
 	}, nil
-}
-
-func (pv *PersistantVolume) GetPath() string {
-	return pv.path
 }

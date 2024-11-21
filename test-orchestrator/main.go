@@ -4,13 +4,18 @@ import (
 	"log"
 
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/controllers"
-	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/project"
+	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
+	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/services/machine"
 )
 
 func main() {
-	tc := controllers.TestController{}
+	tc := controllers.TestController{
+		Executor: machine.Create(),
+	}
 
-	if err := tc.ExecTestSuite(project.Create("https://github.com/jhy/jsoup.git", project.Maven)); err != nil {
+	project := domain.CreateMavenProject("https://github.com/jhy/jsoup.git")
+
+	if err := tc.ExecTestSuite(project); err != nil {
 		log.Fatal(err)
 	} else {
 		log.Println("Success")
