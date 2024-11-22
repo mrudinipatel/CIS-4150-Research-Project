@@ -8,18 +8,24 @@ type TestController struct {
 	Executor domain.TestExecutor
 }
 
-func (t *TestController) ExecTestSuite(proj domain.Project) error {
-	volume, err := t.Executor.CreateWorkspace()
+func (t *TestController) ExecTestSuite(project domain.Project) error {
+	workspace, err := t.Executor.CreateWorkspace()
 
 	if err != nil {
 		return err
 	}
 
-	tests, err := t.Executor.SetupProject(proj, volume)
+	tests, err := t.Executor.SetupProject(project, workspace)
 
 	if err != nil {
+		t.Executor.CleanupWorkspace(workspace)
 		return err
 	}
 
-	return t.Executor.ExecuteTests(proj, volume, tests)
+	if err := t.Executor.ExecuteTests(project, workspace, tests); err != nil {
+		t.Executor.CleanupWorkspace(workspace)
+		return err
+	}
+
+	return t.Executor.CleanupWorkspace(workspace)
 }

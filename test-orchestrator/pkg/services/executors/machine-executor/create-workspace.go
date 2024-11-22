@@ -1,7 +1,6 @@
-package machine
+package machineexecutor
 
 import (
-	"log"
 	"math/rand"
 	"os"
 
@@ -28,10 +27,19 @@ func (pv *Directory) GetPath() string {
 
 // CreateWorkspace implements domain.TestExecutor.
 func (k *MachineExecutor) CreateWorkspace() (domain.Workspace, error) {
-	log.Println("Creating Persistant Volume...")
 	path := "/tmp/" + randSeq(10)
-	os.Mkdir(path, 0750)
+
+	err := os.Mkdir(path, 0750)
+
+	if err != nil {
+		return nil, err
+	}
+
 	return &Directory{
 		path: path,
 	}, nil
+}
+
+func (k *MachineExecutor) CleanupWorkspace(workspace domain.Workspace) error {
+	return os.RemoveAll(workspace.GetPath())
 }

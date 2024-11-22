@@ -1,4 +1,4 @@
-package machine
+package machineexecutor
 
 import (
 	"log"
@@ -10,27 +10,26 @@ import (
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/testset"
 )
 
-// SetupProject implements domain.TestExecutor.
 func (k *MachineExecutor) SetupProject(project domain.Project, workspace domain.Workspace) (*testset.TestSet, error) {
-	log.Println("Setting up project...")
 	cmd := exec.Command("git", "clone", project.GetCloneUrl(), workspace.GetPath())
 
 	if err := cmd.Run(); err != nil {
 		return nil, err
 	}
 
-	setup := project.GetSetupCommand()
+	arguments := strings.Split(project.GetSetupCommand(), " ")
 
-	setup.Dir = workspace.GetPath()
+	cmd = exec.Command(arguments[0], arguments[1:]...)
+	cmd.Dir = workspace.GetPath()
 
-	if err := setup.Run(); err != nil {
+	if err := cmd.Run(); err != nil {
 		return nil, err
 	}
 
 	// Find Test Files
 	log.Println("Discovering test files...")
 
-	getTests := exec.Command("find", ".", "-type", "f", "-name", "*Test*.java")
+	getTests := exec.Command("find", ".", "-type", "f", "-name", project.GetTestFilter())
 	getTests.Dir = workspace.GetPath()
 
 	tests := []string{}

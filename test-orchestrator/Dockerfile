@@ -12,4 +12,4 @@ WORKDIR /workdir
 
 COPY . .
 
-CMD [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash" ]

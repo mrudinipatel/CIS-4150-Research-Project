@@ -2,7 +2,6 @@ package domain
 
 import (
 	"fmt"
-	"os/exec"
 	"strings"
 )
 
@@ -20,10 +19,14 @@ func (ts *MavenProject) GetCloneUrl() string {
 	return ts.projectUrl
 }
 
-func (ts *MavenProject) GetTestCommand(testsuites []string) *exec.Cmd {
-	return exec.Command("mvn", "test", "-DskipIT", fmt.Sprintf("-Dtest=%s", strings.Join(testsuites, ",")))
+func (ts *MavenProject) GetTestCommand(testsuites []string) string {
+	return fmt.Sprintf("mvn test -DskipIT -Dtest=%s", strings.Join(testsuites, ","))
 }
 
-func (ts *MavenProject) GetSetupCommand() *exec.Cmd {
-	return exec.Command("mvn", "clean", "install", "-DskipTests", "-DskipIT")
+func (ts *MavenProject) GetSetupCommand() string {
+	return "mvn clean install -DskipTests -DskipIT"
+}
+
+func (ts *MavenProject) GetTestFilter() string {
+	return "*Test*.java"
 }
