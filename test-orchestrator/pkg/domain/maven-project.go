@@ -20,11 +20,11 @@ func (ts *MavenProject) GetCloneUrl() string {
 }
 
 func (ts *MavenProject) GetTestCommand(testsuites []string) string {
-	return fmt.Sprintf("mvn test -DskipIT -Dtest=%s", strings.Join(testsuites, ","))
+	return fmt.Sprintf("mvn test -DskipIT -Dtest=%s -Dmaven.repo.local=./.m2", strings.Join(testsuites, ","))
 }
 
 func (ts *MavenProject) GetSetupCommand() string {
-	return "mvn clean install -DskipTests -DskipIT"
+	return "mvn clean install -DskipTests -DskipIT -Dmaven.repo.local=./.m2"
 }
 
 func (ts *MavenProject) GetTestFilter() string {

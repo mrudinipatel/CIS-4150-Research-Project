@@ -36,7 +36,6 @@ func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.W
 	return nil
 }
 
-// FIXME: mvn cache is not carried over so slowing down tests
 func (d *DockerExecutor) runTests(tests []string, project domain.Project, workspace domain.Workspace, co chan<- interface{}, wg *sync.WaitGroup) {
 	cmd := exec.Command(
 		"docker",
