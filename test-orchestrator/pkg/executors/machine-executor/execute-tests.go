@@ -7,11 +7,10 @@ import (
 	"sync"
 
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
-	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/testset"
 )
 
 // ExecuteTests implements domain.TestExecutor.
-func (m *MachineExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *testset.TestSet) error {
+func (m *MachineExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *domain.TestSet) error {
 	var results = make(chan interface{})
 	var wg sync.WaitGroup
 	wg.Add(5)

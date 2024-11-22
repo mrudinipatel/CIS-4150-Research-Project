@@ -1,10 +1,10 @@
-package testset
+package domain
 
 type TestSet struct {
 	tests []string
 }
 
-func Create(tests []string) *TestSet {
+func NewTestSet(tests []string) *TestSet {
 	return &TestSet{
 		tests: tests,
 	}

@@ -1,9 +1,5 @@
 package domain
 
-import (
-	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/testset"
-)
-
 type Workspace interface {
 	GetPath() string
 	GetName() string
@@ -12,8 +8,8 @@ type Workspace interface {
 type TestExecutor interface {
 	CreateWorkspace() (Workspace, error)
 	CleanupWorkspace(Workspace) error
-	SetupProject(Project, Workspace) (*testset.TestSet, error)
-	ExecuteTests(Project, Workspace, *testset.TestSet) error
+	SetupProject(Project, Workspace) (*TestSet, error)
+	ExecuteTests(Project, Workspace, *TestSet) error
 }
 
 type Project interface {

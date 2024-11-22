@@ -5,10 +5,9 @@ import (
 	"strings"
 
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
-	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain/testset"
 )
 
-func (k *MachineExecutor) SetupProject(project domain.Project, workspace domain.Workspace) (*testset.TestSet, error) {
+func (k *MachineExecutor) SetupProject(project domain.Project, workspace domain.Workspace) (*domain.TestSet, error) {
 	cmd := exec.Command("git", "clone", project.GetCloneUrl(), workspace.GetPath())
 
 	if err := cmd.Run(); err != nil {
@@ -30,6 +29,6 @@ func (k *MachineExecutor) SetupProject(project domain.Project, workspace domain.
 	if output, err := getTests.Output(); err != nil {
 		return nil, err
 	} else {
-		return testset.Create(strings.Split(string(output), "\n")), nil
+		return domain.NewTestSet(strings.Split(string(output), "\n")), nil
 	}
 }

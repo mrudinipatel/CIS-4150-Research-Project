@@ -5,11 +5,13 @@ import (
 )
 
 type DockerExecutor struct {
-	image string
+	container     *ContainerConfig
+	numContainers int
 }
 
-func Create(image string) domain.TestExecutor {
+func Create(container *ContainerConfig, numContainers int) domain.TestExecutor {
 	return &DockerExecutor{
-		image: image,
+		container,
+		numContainers,
 	}
 }

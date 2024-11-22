@@ -5,12 +5,15 @@ import (
 
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/controllers"
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
-	dockerexecutor "github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/services/executors/docker-executor"
+	dockerexecutor "github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/executors/docker-executor"
 )
 
 func main() {
 	tc := controllers.TestController{
-		Executor: dockerexecutor.Create("test"),
+		Executor: dockerexecutor.Create(
+			dockerexecutor.NewContainerConfig("test", "2g", "1"),
+			5,
+		),
 	}
 
 	project := domain.CreateMavenProject("https://github.com/jhy/jsoup.git")
