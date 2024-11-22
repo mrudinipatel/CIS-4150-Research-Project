@@ -1,7 +1,6 @@
 package dockerexecutor
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os/exec"
@@ -13,38 +12,12 @@ import (
 
 // ExecuteTests implements domain.TestExecutor.
 func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *testset.TestSet) error {
-	volume, isVolume := workspace.(*Volume)
-
-	if !isVolume {
-		return errors.New("expected volume workspace")
-	}
-
 	var results = make(chan interface{})
 	var wg sync.WaitGroup
 	wg.Add(5)
 
 	for _, tests := range testset.Split(5) {
-		go func(co chan<- interface{}) {
-			cmd := exec.Command(
-				"docker",
-				"run",
-				"--rm",
-				"-v", fmt.Sprintf("%s:%s", volume.GetName(), volume.GetPath()),
-				"-w", volume.GetPath(),
-				"--entrypoint", "/bin/sh",
-				d.image,
-				"-c",
-				project.GetTestCommand(tests),
-			)
-
-			if output, err := cmd.Output(); err != nil {
-				co <- err
-			} else {
-				co <- string(output)
-			}
-
-			wg.Done()
-		}(results)
+		go d.runTests(tests, project, workspace, results, &wg)
 	}
 
 	go func() {
@@ -61,4 +34,27 @@ func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.W
 	wg.Wait()
 	close(results)
 	return nil
+}
+
+// FIXME: mvn cache is not carried over so slowing down tests
+func (d *DockerExecutor) runTests(tests []string, project domain.Project, workspace domain.Workspace, co chan<- interface{}, wg *sync.WaitGroup) {
+	cmd := exec.Command(
+		"docker",
+		"run",
+		"--rm",
+		"-v", fmt.Sprintf("%s:%s", workspace.GetName(), workspace.GetPath()),
+		"-w", workspace.GetPath(),
+		"--entrypoint", "/bin/sh",
+		d.image,
+		"-c",
+		project.GetTestCommand(tests),
+	)
+
+	if output, err := cmd.Output(); err != nil {
+		co <- err
+	} else {
+		co <- string(output)
+	}
+
+	wg.Done()
 }

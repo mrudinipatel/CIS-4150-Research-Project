@@ -1,7 +1,6 @@
 package dockerexecutor
 
 import (
-	"errors"
 	"os/exec"
 	"strings"
 
@@ -34,12 +33,6 @@ func (d *DockerExecutor) CreateWorkspace() (domain.Workspace, error) {
 }
 
 func (d *DockerExecutor) CleanupWorkspace(workspace domain.Workspace) error {
-	volume, isVolume := workspace.(*Volume)
-
-	if !isVolume {
-		return errors.New("expected volume workspace")
-	}
-
-	cmd := exec.Command("docker", "volume", "rm", volume.GetName())
+	cmd := exec.Command("docker", "volume", "rm", workspace.GetName())
 	return cmd.Run()
 }

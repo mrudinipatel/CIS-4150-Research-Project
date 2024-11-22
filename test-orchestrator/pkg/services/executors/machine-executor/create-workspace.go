@@ -1,45 +1,35 @@
 package machineexecutor
 
 import (
-	"math/rand"
 	"os"
 
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
 )
 
 type Directory struct {
-	path string
+	name string
 }
 
-var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+func (d *Directory) GetPath() string {
+	return "/tmp/" + d.name
+}
 
-func randSeq(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
+func (d *Directory) GetName() string {
+	return d.name
+}
+
+func (m *MachineExecutor) CreateWorkspace() (domain.Workspace, error) {
+	d := &Directory{
+		name: randSeq(10),
 	}
-	return string(b)
-}
 
-func (pv *Directory) GetPath() string {
-	return pv.path
-}
-
-// CreateWorkspace implements domain.TestExecutor.
-func (k *MachineExecutor) CreateWorkspace() (domain.Workspace, error) {
-	path := "/tmp/" + randSeq(10)
-
-	err := os.Mkdir(path, 0750)
-
-	if err != nil {
+	if err := os.Mkdir(d.GetPath(), 0750); err != nil {
 		return nil, err
+	} else {
+		return d, nil
 	}
-
-	return &Directory{
-		path: path,
-	}, nil
 }
 
-func (k *MachineExecutor) CleanupWorkspace(workspace domain.Workspace) error {
+func (m *MachineExecutor) CleanupWorkspace(workspace domain.Workspace) error {
 	return os.RemoveAll(workspace.GetPath())
 }

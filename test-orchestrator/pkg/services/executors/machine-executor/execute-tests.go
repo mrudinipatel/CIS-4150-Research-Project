@@ -11,26 +11,13 @@ import (
 )
 
 // ExecuteTests implements domain.TestExecutor.
-func (k *MachineExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *testset.TestSet) error {
+func (m *MachineExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *testset.TestSet) error {
 	var results = make(chan interface{})
 	var wg sync.WaitGroup
 	wg.Add(5)
 
 	for _, tests := range testset.Split(5) {
-		go func(co chan<- interface{}) {
-			arguments := strings.Split(project.GetTestCommand(tests), " ")
-
-			cmd := exec.Command(arguments[0], arguments[1:]...)
-			cmd.Dir = workspace.GetPath()
-
-			if output, err := cmd.Output(); err != nil {
-				co <- err
-			} else {
-				co <- string(output)
-			}
-
-			wg.Done()
-		}(results)
+		go m.runTests(tests, project, workspace, results, &wg)
 	}
 
 	go func() {
@@ -47,4 +34,19 @@ func (k *MachineExecutor) ExecuteTests(project domain.Project, workspace domain.
 	wg.Wait()
 	close(results)
 	return nil
+}
+
+func (m *MachineExecutor) runTests(tests []string, project domain.Project, workspace domain.Workspace, co chan<- interface{}, wg *sync.WaitGroup) {
+	arguments := strings.Split(project.GetTestCommand(tests), " ")
+
+	cmd := exec.Command(arguments[0], arguments[1:]...)
+	cmd.Dir = workspace.GetPath()
+
+	if output, err := cmd.Output(); err != nil {
+		co <- err
+	} else {
+		co <- string(output)
+	}
+
+	wg.Done()
 }

@@ -6,6 +6,7 @@ import (
 
 type Workspace interface {
 	GetPath() string
+	GetName() string
 }
 
 type TestExecutor interface {
