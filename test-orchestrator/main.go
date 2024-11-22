@@ -9,9 +9,19 @@ import (
 )
 
 func main() {
+	image, err := dockerexecutor.BuildImage(".")
+
+	if err != nil {
+		panic(err)
+	}
+
 	tc := controllers.TestController{
 		Executor: dockerexecutor.Create(
-			dockerexecutor.NewContainerConfig("test", "2g", "1"),
+			dockerexecutor.NewContainerConfig(
+				image,
+				"2g",
+				"1",
+			),
 			5,
 		),
 	}
@@ -20,7 +30,7 @@ func main() {
 
 	if err := tc.ExecTestSuite(project); err != nil {
 		log.Fatal(err)
-	} else {
-		log.Println("Success")
 	}
+
+	dockerexecutor.DeleteImage(image)
 }

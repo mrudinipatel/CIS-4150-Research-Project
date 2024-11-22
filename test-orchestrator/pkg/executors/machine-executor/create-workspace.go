@@ -20,7 +20,7 @@ func (d *Directory) GetName() string {
 
 func (m *MachineExecutor) CreateWorkspace() (domain.Workspace, error) {
 	d := &Directory{
-		name: randSeq(10),
+		name: domain.RandSeq(10),
 	}
 
 	if err := os.Mkdir(d.GetPath(), 0750); err != nil {

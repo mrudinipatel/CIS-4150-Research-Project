@@ -9,34 +9,17 @@ import (
 
 // ExecuteTests implements domain.TestExecutor.
 func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *domain.TestSet) error {
-	var results = make(chan interface{})
-	defer close(results)
-
 	var wg sync.WaitGroup
 	wg.Add(d.numContainers)
 
 	for _, tests := range testset.Split(d.numContainers) {
-		go func(co chan<- interface{}, wg *sync.WaitGroup) {
+		go func(wg *sync.WaitGroup) {
 			if output, err := d.container.Run(project.GetTestCommand(tests), workspace); err != nil {
-				co <- err
-			} else {
-				co <- output
+				log.Fatal(output)
 			}
-
 			wg.Done()
-		}(results, &wg)
+		}(&wg)
 	}
-
-	go func() {
-		for result := range results {
-			switch result.(type) {
-			case string:
-				log.Println(result)
-			case error:
-				log.Panic(result)
-			}
-		}
-	}()
 
 	wg.Wait()
 	return nil

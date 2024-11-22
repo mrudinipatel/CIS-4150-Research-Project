@@ -37,8 +37,8 @@ func (i *ContainerConfig) Run(command string, workspace domain.Workspace) (strin
 		command,
 	)
 
-	if output, err := cmd.Output(); err != nil {
-		log.Fatal(err)
+	if output, err := cmd.CombinedOutput(); err != nil {
+		log.Fatal(output)
 		return "", err
 	} else {
 		return string(output), nil
