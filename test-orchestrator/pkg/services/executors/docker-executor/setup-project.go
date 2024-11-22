@@ -23,7 +23,7 @@ func (d *DockerExecutor) SetupProject(project domain.Project, workspace domain.W
 		d.setupCommand(project, workspace),
 	)
 
-	if output, err := cmd.CombinedOutput(); err != nil {
+	if output, err := cmd.Output(); err != nil {
 		return nil, err
 	} else {
 		return testset.Create(strings.Split(string(output), "\n")), nil

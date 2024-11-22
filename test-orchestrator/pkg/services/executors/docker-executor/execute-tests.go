@@ -13,6 +13,8 @@ import (
 // ExecuteTests implements domain.TestExecutor.
 func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.Workspace, testset *testset.TestSet) error {
 	var results = make(chan interface{})
+	defer close(results)
+
 	var wg sync.WaitGroup
 	wg.Add(5)
 
@@ -32,7 +34,6 @@ func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.W
 	}()
 
 	wg.Wait()
-	close(results)
 	return nil
 }
 
