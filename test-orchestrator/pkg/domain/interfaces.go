@@ -16,5 +16,5 @@ type Project interface {
 	GetCloneUrl() string
 	GetTestCommand(testsuites []string) string
 	GetSetupCommand() string
-	GetTestFilter() string
+	GetTestFilterCommand() string
 }

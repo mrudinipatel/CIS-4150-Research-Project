@@ -13,7 +13,7 @@ func BuildImage(path string) (string, error) {
 	cmd := exec.Command("docker", "build", path, "-t", imageTag)
 
 	if output, err := cmd.CombinedOutput(); err != nil {
-		log.Fatal(string(output))
+		log.Println(string(output))
 		return "", err
 	}
 
@@ -24,7 +24,7 @@ func DeleteImage(image string) error {
 	cmd := exec.Command("docker", "image", "rm", image)
 
 	if output, err := cmd.CombinedOutput(); err != nil {
-		log.Fatal(string(output))
+		log.Println(string(output))
 		return err
 	}
 

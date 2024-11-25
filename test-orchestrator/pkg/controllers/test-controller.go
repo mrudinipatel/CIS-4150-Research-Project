@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"time"
+
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
 )
 
@@ -8,24 +10,26 @@ type TestController struct {
 	Executor domain.TestExecutor
 }
 
-func (t *TestController) ExecTestSuite(project domain.Project) error {
+func (t *TestController) ExecTestSuite(project domain.Project) (time.Duration, error) {
 	workspace, err := t.Executor.CreateWorkspace()
 
 	if err != nil {
-		return err
+		return -1, err
 	}
+
+	defer t.Executor.CleanupWorkspace(workspace)
 
 	tests, err := t.Executor.SetupProject(project, workspace)
 
 	if err != nil {
-		t.Executor.CleanupWorkspace(workspace)
-		return err
+		return -1, err
 	}
 
-	if err := t.Executor.ExecuteTests(project, workspace, tests); err != nil {
-		t.Executor.CleanupWorkspace(workspace)
-		return err
+	curr := time.Now()
+
+	if err = t.Executor.ExecuteTests(project, workspace, tests); err != nil {
+		return -1, err
 	}
 
-	return t.Executor.CleanupWorkspace(workspace)
+	return time.Since(curr), nil
 }

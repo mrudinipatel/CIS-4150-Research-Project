@@ -23,7 +23,8 @@ func (k *MachineExecutor) SetupProject(project domain.Project, workspace domain.
 		return nil, err
 	}
 
-	getTests := exec.Command("find", ".", "-type", "f", "-name", project.GetTestFilter(), "-exec", "basename", "{}", "\\;")
+	arguments = strings.Split(project.GetTestFilterCommand(), " ")
+	getTests := exec.Command(arguments[0], arguments[1:]...)
 	getTests.Dir = workspace.GetPath()
 
 	if output, err := getTests.Output(); err != nil {

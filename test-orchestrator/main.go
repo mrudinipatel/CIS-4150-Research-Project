@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/controllers"
@@ -12,25 +13,28 @@ func main() {
 	image, err := dockerexecutor.BuildImage(".")
 
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
+
+	defer dockerexecutor.DeleteImage(image)
 
 	tc := controllers.TestController{
 		Executor: dockerexecutor.Create(
 			dockerexecutor.NewContainerConfig(
 				image,
 				"2g",
-				"1",
+				"2",
 			),
-			5,
+			4,
 		),
 	}
 
 	project := domain.CreateMavenProject("https://github.com/jhy/jsoup.git")
+	// project := domain.CreateMavenProjectWithTestModule("https://github.com/google/guava.git", "guava-tests")
 
-	if err := tc.ExecTestSuite(project); err != nil {
-		log.Fatal(err)
+	if duration, err := tc.ExecTestSuite(project); err != nil {
+		log.Panic(err)
+	} else {
+		fmt.Println(duration)
 	}
-
-	dockerexecutor.DeleteImage(image)
 }

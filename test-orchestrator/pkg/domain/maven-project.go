@@ -7,11 +7,20 @@ import (
 
 type MavenProject struct {
 	projectUrl string
+	testModule string
 }
 
 func CreateMavenProject(projectUrl string) Project {
 	return &MavenProject{
 		projectUrl: projectUrl,
+		testModule: ".",
+	}
+}
+
+func CreateMavenProjectWithTestModule(projectUrl string, testModule string) Project {
+	return &MavenProject{
+		projectUrl,
+		testModule,
 	}
 }
 
@@ -20,13 +29,13 @@ func (ts *MavenProject) GetCloneUrl() string {
 }
 
 func (ts *MavenProject) GetTestCommand(testsuites []string) string {
-	return fmt.Sprintf("mvn test -DskipIT -Dtest=%s -Dmaven.repo.local=./.m2", strings.Join(testsuites, ","))
+	return fmt.Sprintf("cd %s && mvn test -DskipIT -Dtest=%s", ts.testModule, strings.Join(testsuites, ","))
 }
 
 func (ts *MavenProject) GetSetupCommand() string {
-	return "mvn clean install -DskipTests -DskipIT -Dmaven.repo.local=./.m2"
+	return "mvn clean install -DskipTests -DskipIT"
 }
 
-func (ts *MavenProject) GetTestFilter() string {
-	return "*Test*.java"
+func (ts *MavenProject) GetTestFilterCommand() string {
+	return fmt.Sprintf("find %s -type f -name *Test*.class -exec basename -s .class {} \\;", ts.testModule)
 }

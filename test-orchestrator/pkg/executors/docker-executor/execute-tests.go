@@ -15,7 +15,7 @@ func (d *DockerExecutor) ExecuteTests(project domain.Project, workspace domain.W
 	for _, tests := range testset.Split(d.numContainers) {
 		go func(wg *sync.WaitGroup) {
 			if output, err := d.container.Run(project.GetTestCommand(tests), workspace); err != nil {
-				log.Fatal(output)
+				log.Println(output)
 			}
 			wg.Done()
 		}(&wg)
