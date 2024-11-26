@@ -1,20 +1,15 @@
 package domain
 
-type Workspace interface {
-	GetPath() string
-	GetName() string
-}
-
-type TestExecutor interface {
-	CreateWorkspace() (Workspace, error)
-	CleanupWorkspace(Workspace) error
-	SetupProject(Project, Workspace) (*TestSet, error)
-	ExecuteTests(Project, Workspace, *TestSet) error
-}
-
 type Project interface {
-	GetCloneUrl() string
-	GetTestCommand(testsuites []string) string
-	GetSetupCommand() string
-	GetTestFilterCommand() string
+	GetTestCommands(n int) []string
+	RunTestsParallelWithConfig(int, WorkspaceConfig) error
 }
+
+type Workspace interface {
+	Cleanup() error
+	Run(string) (string, error)
+	RunWithConfig(string, WorkspaceConfig) (string, error)
+	RunParallelWithConfig([]string, WorkspaceConfig) error
+}
+
+type WorkspaceConfig interface{}

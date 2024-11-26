@@ -1,40 +1,56 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"time"
 
-	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/controllers"
 	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/domain"
-	dockerexecutor "github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/executors/docker-executor"
+	"github.com/D3h4n/CIS-4150-Research-Project/test-orchestrator/pkg/workspace/docker"
 )
 
 func main() {
-	image, err := dockerexecutor.BuildImage(".")
+	dockerImage := docker.NewDockerImage("test")
+
+	configs := []docker.ContainerConfig{
+		{Image: dockerImage, Memory: "1g", Cpus: "2"}, // t3.micro
+		{Image: dockerImage, Memory: "2g", Cpus: "2"}, // t3.small
+		{Image: dockerImage, Memory: "4g", Cpus: "2"}, // t3.medium
+	}
+
+	containers := []int{1, 2, 3}
+
+	workspace, err := docker.CreateWorkspace(docker.ContainerConfig{Image: dockerImage, Memory: "4g", Cpus: "4"})
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	defer dockerexecutor.DeleteImage(image)
+	defer workspace.Cleanup()
 
-	tc := controllers.TestController{
-		Executor: dockerexecutor.Create(
-			dockerexecutor.NewContainerConfig(
-				image,
-				"2g",
-				"2",
-			),
-			4,
-		),
-	}
+	project, err := domain.CreateMavenProjectWithTestModule("https://github.com/google/guava.git", "guava-tests", workspace)
+	// project, err := domain.CreateMavenProject("https://github.com/jhy/jsoup.git", workspace)
 
-	project := domain.CreateMavenProject("https://github.com/jhy/jsoup.git")
-	// project := domain.CreateMavenProjectWithTestModule("https://github.com/google/guava.git", "guava-tests")
-
-	if duration, err := tc.ExecTestSuite(project); err != nil {
+	if err != nil {
 		log.Panic(err)
-	} else {
-		fmt.Println(duration)
 	}
+
+	for _, config := range configs {
+		for _, n := range containers {
+			if duration, err := ExecTestSuite(project, config, n); err != nil {
+				log.Panic(err)
+			} else {
+				log.Println(duration)
+			}
+		}
+	}
+}
+
+func ExecTestSuite(project domain.Project, config domain.WorkspaceConfig, n int) (time.Duration, error) {
+	curr := time.Now()
+
+	if err := project.RunTestsParallelWithConfig(n, config); err != nil {
+		return -1, err
+	}
+
+	return time.Since(curr), nil
 }
