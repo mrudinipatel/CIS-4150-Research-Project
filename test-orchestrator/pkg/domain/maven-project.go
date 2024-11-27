@@ -32,7 +32,7 @@ func CreateMavenProjectWithTestModule(projectUrl string, testModule string, work
 
 func setupCommand(cloneUrl string, testModule string) string {
 	return fmt.Sprintf(
-		"git clone %s . 1>&2 && mvn clean install -DskipTests -DskipIT 1>&2 && find %s -type f -name *Test*.class -exec basename -s .class {} \\;",
+		"git clone %s . 1>&2 && mvn clean install -DskipTests -DskipIT 1>&2 && find %s -type f -name \"*Test*.class\" -not -name \"*\\$*\" -exec basename -s .class {} \\;",
 		cloneUrl,
 		testModule,
 	)
