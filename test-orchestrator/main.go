@@ -10,7 +10,11 @@ import (
 )
 
 func main() {
-	dockerImage := docker.NewDockerImage("test")
+	dockerImage, err := docker.BuildImage(".")
+
+	if err != nil {
+		log.Panic(err)
+	}
 
 	configs := []docker.ContainerConfig{
 		{Image: dockerImage, Memory: "1g", Cpus: "2"}, // t3.micro

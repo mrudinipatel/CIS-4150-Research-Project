@@ -13,7 +13,7 @@ func NewTestSet(tests []string) *TestSet {
 }
 
 func (ts *TestSet) Split(n int) [][]string {
-	result := make([][]string, n)
+	result := [][]string{}
 
 	for i := 0; i < n; i++ {
 		result = append(result, []string{})
