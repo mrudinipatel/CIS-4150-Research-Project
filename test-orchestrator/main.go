@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -27,30 +28,43 @@ func main() {
 
 	defer workspace.Cleanup()
 
-	project, err := domain.CreateMavenProjectWithTestModule("https://github.com/google/guava.git", "guava-tests", workspace)
-	// project, err := domain.CreateMavenProject("https://github.com/jhy/jsoup.git", workspace)
+	// project, err := domain.CreateMavenProjectWithTestModule("https://github.com/google/guava.git", "guava-tests", workspace)
+	project, err := domain.CreateMavenProject("https://github.com/jhy/jsoup.git", workspace)
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	for _, config := range configs {
+	fmt.Println("config,containers,duration")
+
+	for i, config := range configs {
 		for _, n := range containers {
 			if duration, err := ExecTestSuite(project, config, n); err != nil {
 				log.Panic(err)
 			} else {
-				log.Println(duration)
+				fmt.Printf("%d,%d,%d\n", i, n, duration)
 			}
+
+			time.Sleep(time.Duration(time.Minute * 2)) // sleep for 2 minutes to allow the CPU to cool
 		}
 	}
 }
 
-func ExecTestSuite(project domain.Project, config domain.WorkspaceConfig, n int) (time.Duration, error) {
-	curr := time.Now()
+func ExecTestSuite(project domain.Project, config domain.WorkspaceConfig, numContainers int) (int, error) {
+	totalTime := 0
+	numIterations := 3
 
-	if err := project.RunTestsParallelWithConfig(n, config); err != nil {
-		return -1, err
+	for i := 0; i < numIterations; i++ {
+		start := time.Now()
+
+		if err := project.RunTestsParallelWithConfig(numContainers, config); err != nil {
+			return -1, err
+		}
+
+		totalTime += int(time.Since(start).Milliseconds())
 	}
 
-	return time.Since(curr), nil
+	avgTime := totalTime / numIterations
+
+	return avgTime, nil
 }

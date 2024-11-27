@@ -85,11 +85,13 @@ func (w *DockerWorkspace) RunWithConfig(command string, config domain.WorkspaceC
 }
 
 type result struct {
-	string
-	error
+	output string
+	err    error
 }
 
 func (w *DockerWorkspace) RunParallelWithConfig(commands []string, config domain.WorkspaceConfig) error {
+	outputResult := false
+
 	var wg sync.WaitGroup
 	wg.Add(len(commands))
 
@@ -106,8 +108,8 @@ func (w *DockerWorkspace) RunParallelWithConfig(commands []string, config domain
 
 	go func() {
 		for result := range out {
-			if result.error != nil {
-				log.Println(result.string)
+			if outputResult && result.err != nil {
+				log.Println(result.output)
 			}
 		}
 	}()
