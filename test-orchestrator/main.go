@@ -22,6 +22,8 @@ func main() {
 		log.Panic(err)
 	}
 
+	defer dockerImage.Cleanup()
+
 	configs := []docker.ContainerConfig{
 		{Image: dockerImage, Memory: "1g", Cpus: "2"}, // t3.micro
 		{Image: dockerImage, Memory: "2g", Cpus: "2"}, // t3.small
