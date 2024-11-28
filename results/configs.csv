@@ -1,4 +1,4 @@
-config,memory,cpus
+Config,Memory,Cpus
 0,1G,2
 1,2G,2
 2,4G,2
