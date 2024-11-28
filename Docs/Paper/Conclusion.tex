@@ -1,2 +1,7 @@
 \section{Conclusion}
 \label{Conclusion}
+
+The findings of this study demonstrate that distributed testing offers varying levels of efficiency depending on the size of the testable codebase and the resource configurations. For smaller libraries like JSoup, the overhead of managing multiple containers outweighs the performance gains, confirming the hypothesis that distributed testing is inefficient and ineffective for smaller codebases. Conversely, for larger libraries like Guava, the study has produced evidence of improvement through scaling CPUs and containers, however reducing interactions and returns between resources limits this benefit. All in all, the results of this study support the hypothesis that distributed testing holds a greater advantage for larger codebases.  
+
+
+Future work should address the shortcomings of this study and strive to further refine its findings. For instance, running multiple test suites simultaneously could better simulate real-world software testing scenarios, as production and quality assurance environments oftentimes execute multiple tasks concurrently. Additionally, future work could expand the scope of the study by including projects written in a variety of programming languages and build environments beyond Apache Maven. This could help better generalize the results across diverse environments. Moreover, increasing the number of simulation runs would yield more data samples, improving the statistical significance of the results and clarifying trends observed in CPU, memory, and container interactions. 
