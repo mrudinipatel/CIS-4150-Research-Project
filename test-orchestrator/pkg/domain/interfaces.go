@@ -1,6 +1,7 @@
 package domain
 
 type Project interface {
+	GetName() string
 	GetTestCommands(n int) []string
 	RunTestsParallelWithConfig(int, WorkspaceConfig) error
 }

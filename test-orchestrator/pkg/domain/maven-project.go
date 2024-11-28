@@ -6,21 +6,23 @@ import (
 )
 
 type MavenProject struct {
+	name       string
 	projectUrl string
 	testModule string
 	workspace  Workspace
 	tests      *TestSet
 }
 
-func CreateMavenProject(projectUrl string, workspace Workspace) (Project, error) {
-	return CreateMavenProjectWithTestModule(projectUrl, ".", workspace)
+func CreateMavenProject(projectName string, projectUrl string, workspace Workspace) (Project, error) {
+	return CreateMavenProjectWithTestModule(projectName, projectUrl, ".", workspace)
 }
 
-func CreateMavenProjectWithTestModule(projectUrl string, testModule string, workspace Workspace) (Project, error) {
+func CreateMavenProjectWithTestModule(projectName string, projectUrl string, testModule string, workspace Workspace) (Project, error) {
 	if output, err := workspace.Run(setupCommand(projectUrl, testModule)); err != nil {
 		return nil, err
 	} else {
 		return &MavenProject{
+			name:       projectName,
 			projectUrl: projectUrl,
 			testModule: testModule,
 			workspace:  workspace,
@@ -50,4 +52,8 @@ func (ts *MavenProject) GetTestCommands(n int) []string {
 
 func (ts *MavenProject) RunTestsParallelWithConfig(n int, config WorkspaceConfig) error {
 	return ts.workspace.RunParallelWithConfig(ts.GetTestCommands(n), config)
+}
+
+func (ts *MavenProject) GetName() string {
+	return ts.name
 }
