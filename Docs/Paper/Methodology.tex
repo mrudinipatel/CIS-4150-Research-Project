@@ -1,36 +1,45 @@
 \section{Methodology}
 \label{Methodology}
-\begin{enumerate}
-\item Simulate distributed servers using Docker containers with various allocated resources.
+
+
+To simulate distributed compute, we used docker containers \cite{docker} with specific resource limits. The specific configurations were chosen to simulate vertical scaling based on memory and compute, some of which were chosen to match various aws ec2 instances. These included:
 \begin{itemize}
-        \item Vertical Scaling Memory 
-        \begin{itemize}
-            \item Memory: 1G, CPUs: 2 (simulates \texttt{t3.micro ec2} instance) 
-            \item Memory: 2G, CPUs: 2 (simulates \texttt{t3.small ec2} instance) 
-            \item Memory: 4G, CPUs: 2 (simulates \texttt{t3.medium ec2} instance) 
-        \end{itemize}
-        \item Vertical Scaling CPUs 
-        \begin{itemize}
-            \item Memory: 2G, CPUs: 1 
-            \item Memory: 2G, CPUs: 2 
-            \item Memory: 2G, CPUs: 4 
-        \end{itemize}
+    \item Vertical Scaling Memory 
+    \begin{itemize}
+        \item Memory: 1G, CPUs: 2 (simulates \texttt{t3.micro ec2} instance) 
+        \item Memory: 2G, CPUs: 2 (simulates \texttt{t3.small ec2} instance) 
+        \item Memory: 4G, CPUs: 2 (simulates \texttt{t3.medium ec2} instance) 
     \end{itemize}
-\item Select programs of varying sizes. The analysis in this study was performed on two Java libraries: JSoup representing a smaller library and Guava representing a larger library. 
-\item Unit test execution was performed using an automated test script which we implemented using the Go programming language. 
+    \item Vertical Scaling CPUs 
+    \begin{itemize}
+        \item Memory: 2G, CPUs: 1 
+        \item Memory: 2G, CPUs: 2 
+        \item Memory: 2G, CPUs: 4 
+    \end{itemize}
+\end{itemize}
+
+To perform this test, we selected two JUnit based projects Jsoup \cite{jsoup} and Guava \cite{guava}. These represent small and large projects respectively and were chosen to test whether the size of the project would impact our results.
+
+\subsection{Procedure}
+\label{Procedure}
+
+Unit test execution was performed using an automated test script which we implemented using the Go programming language \cite{testscript}. 
+
+\begin{enumerate}
 \item Environment setup 
 \begin{itemize}
-        \item A Docker container was created to perform the initial set up of the libraries. 
+        \item A Docker container is created to perform the initial set up of the libraries. 
         \item Two Docker volumes were attached to the Docker container to store dependencies and the compiled library and tests to be used during test execution. 
         \item The project under test was cloned into the first volume and the \texttt{mvn clean install {-}DskipTests {-}DskipIT} command was executed to install dependencies in the second volume as well as pre-compile the library and unit tests. 
-        \item We extracted all the unit tests by filtering the generated class files for tests. 
+        \item Unit tests names were determined by filtering the generated class files for tests. 
     \end{itemize}
 \item Test execution 
 \begin{itemize}
-        \item Tests were executed using 1, 2 and 3 containers. 
-        \item For each test run we randomly shuffled the tests—to reduce bias due to the order and size of tests—and evenly split them between each container. 
-        \item Each set of tests was executed using the \texttt{mvn test} command specifying the specific unit tests to execute using the \texttt{-Dtest} flag. 
-        \item The time to execute all tests, including starting up the test containers, was measured and recorded. 
+        \item Tests were executed using 1, 2 and 3 containers.
+        \item For each container, the volumes mentioned previously were attached.
+        \item The unit tests were randomly shuffled and evenly split between each container. 
+        \item Each test container executed the \texttt{mvn test} command specifying the specific unit tests to execute using the \texttt{-Dtest} flag. 
+        \item The time to execute all tests, including: starting up all of the test containers, executing all the tests and terminating the all of the test containers, was measured and recorded. 
         \item Each test run was repeated 3 times to account for the effects of caching and to generate a sample for statistical analysis. 
         \item Between testing each configuration of resources and containers, the CPU was allowed 2 minutes to cool to reduce the impact of heating on performance. 
     \end{itemize}
