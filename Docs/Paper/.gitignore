@@ -1,6 +1,9 @@
-main.aux
-main.bbl
-main.blg
-main.log
-main.out
-main.synctex.gz
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+*.pdf
+*.fls
+*.fdb_latexmk
