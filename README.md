@@ -1,4 +1,4 @@
-# CIS*4150 Research Paper
+# CIS*4150 Research Paper 📖
 
 This repository contains all of the research material and documentation for CIS*4150 (Software Testing & Reliability) taught by Professor Edward Sykes in Fall 2024. 
 
